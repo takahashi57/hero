@@ -6,7 +6,10 @@ import {
   Grid,
   Box,
   Button,
+ cyls60-codex/cmsプログラムのバグ修正提案
+
   CircularProgress,
+ main
   TextField,
   MenuItem,
   FormControl,
@@ -44,8 +47,11 @@ const CustomerCreate = () => {
     memo: '',
     hasPhotos: false,
   });
+ cyls60-codex/cmsプログラムのバグ修正提案
+
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+ main
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -80,7 +86,9 @@ const CustomerCreate = () => {
   if (error) {
     return (
       <Typography color="error" align="center">
-        {error}
+      cyls60-codex/cmsプログラムのバグ修正提案
+        {error || '顧客が見つかりません'}
+  　main
       </Typography>
     );
   }
@@ -106,6 +114,8 @@ const CustomerCreate = () => {
             <Typography variant="subtitle1" color="text.secondary" gutterBottom>
               基本情報
             </Typography>
+ cyls60-codex/cmsプログラムのバグ修正提案
+
 
             <TextField
               fullWidth
@@ -135,6 +145,7 @@ const CustomerCreate = () => {
               sx={{ mb: 2 }}
               InputLabelProps={{ shrink: true }}
             />
+ main
             
             <FormControl fullWidth sx={{ mb: 2 }}>
               <InputLabel>ステータス</InputLabel>
@@ -263,6 +274,8 @@ const CustomerCreate = () => {
             />
 
             <FormControl fullWidth sx={{ mb: 2 }}>
+cyls60-codex/cmsプログラムのバグ修正提案
+
               <InputLabel>付属品の有無</InputLabel>
               <Select
                 name="hasAccessories"
@@ -278,6 +291,7 @@ const CustomerCreate = () => {
             </FormControl>
 
             <FormControl fullWidth sx={{ mb: 2 }}>
+ main
               <InputLabel>付属品</InputLabel>
               <Select
                 multiple
@@ -322,6 +336,8 @@ const CustomerCreate = () => {
               rows={4}
               sx={{ mb: 2 }}
             />
+ cyls60-codex/cmsプログラムのバグ修正提案
+
 
             <FormControl fullWidth sx={{ mb: 2 }}>
               <InputLabel>否認ステータス</InputLabel>
@@ -359,7 +375,7 @@ const CustomerCreate = () => {
                 <MenuItem value="あり">あり</MenuItem>
                 <MenuItem value="なし">なし</MenuItem>
               </Select>
-            </FormControl>
+            </FormControl> main
           </Grid>
 
           <Grid item xs={12}>

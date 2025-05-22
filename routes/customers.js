@@ -78,6 +78,17 @@ router.post('/import', upload.single('file'), async (req, res) => {
     });
 });
 
+// 顧客の新規作成
+router.post('/', async (req, res) => {
+  try {
+    const customer = new Customer(req.body);
+    await customer.save();
+    res.status(201).json(customer);
+  } catch (error) {
+    res.status(400).json({ message: '顧客の作成に失敗しました', error: error.message });
+  }
+});
+
 // 顧客一覧の取得
 router.get('/', async (req, res) => {
   try {

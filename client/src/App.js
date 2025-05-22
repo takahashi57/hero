@@ -9,10 +9,9 @@ import Layout from './components/Layout';
 import CustomerList from './components/CustomerList';
 import CustomerDetail from './components/CustomerDetail';
 import CustomerEdit from './components/CustomerEdit';
-// l66sy3-codex/cmsプログラムのバグ修正提案
+ l66sy3-codex/cmsプログラムのバグ修正提案
 import CustomerCreate from './components/CustomerCreate';
-=======
-// main
+ main
 import ImportCSV from './components/ImportCSV';
 
 function App() {
