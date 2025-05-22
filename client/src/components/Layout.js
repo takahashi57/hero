@@ -8,7 +8,10 @@ import {
   Container,
   Box,
 } from '@mui/material';
-import { Upload as UploadIcon, List as ListIcon, Add as AddIcon } from '@mui/icons-material';
+ cyls60-codex/cmsプログラムのバグ修正提案
+
+import { Upload as UploadIcon, List as ListIcon, PersonAdd as PersonAddIcon } from '@mui/icons-material';
+main
 
 const Layout = ({ children }) => {
   return (
@@ -41,6 +44,14 @@ const Layout = ({ children }) => {
             startIcon={<UploadIcon />}
           >
             CSVインポート
+          </Button>
+          <Button
+            color="inherit"
+            component={RouterLink}
+            to="/customer/new"
+            startIcon={<PersonAddIcon />}
+          >
+            顧客追加
           </Button>
         </Toolbar>
       </AppBar>

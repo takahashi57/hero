@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Paper,
@@ -23,11 +23,7 @@ const CustomerDetail = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
-  useEffect(() => {
-    fetchCustomer();
-  }, [id]);
-
-  const fetchCustomer = async () => {
+  const fetchCustomer = useCallback(async () => {
     try {
       const response = await axios.get(`http://localhost:5000/api/customers/${id}`);
       setCustomer(response.data);
@@ -36,7 +32,11 @@ const CustomerDetail = () => {
       setError('顧客データの取得に失敗しました');
       setLoading(false);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    fetchCustomer();
+  }, [fetchCustomer]);
 
   const handleDelete = async () => {
     setDeleting(true);
