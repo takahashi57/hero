@@ -126,10 +126,10 @@ const [saving, setSaving] = useState(false);
           <Typography variant="h5" gutterBottom>
             顧客情報の追加
           </Typography>
+          <Typography color="error" sx={{ mt: 2, mb: 2 }}>
+            {error}
+          </Typography>
         </Box>
-        <Typography color="error" align="center" sx={{ mt: 2 }}>
-          {error}
-        </Typography>
       </Paper>
     );
   }

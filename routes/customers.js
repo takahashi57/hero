@@ -83,6 +83,40 @@ router.post('/import', upload.single('file'), async (req, res) => {
 // 顧客の新規作成
 router.post('/', async (req, res) => {
   try {
+    // 入力値の検証
+    const requiredFields = [
+      'userId',
+      'applicationId',
+      'deliveryDate',
+      'brand',
+      'item',
+      'condition',
+      'purchasePeriod',
+      'name',
+      'nameKana',
+      'email',
+      'postalCode',
+      'address',
+      'phone'
+    ];
+
+    const missingFields = requiredFields.filter(field => !req.body[field]);
+    if (missingFields.length > 0) {
+      return res.status(400).json({
+        message: '必須項目が入力されていません',
+        details: { missingFields }
+      });
+    }
+
+    // userIdの重複チェック
+    const existingCustomer = await Customer.findOne({ userId: req.body.userId });
+    if (existingCustomer) {
+      return res.status(400).json({
+        message: 'このユーザーIDは既に使用されています',
+        details: { field: 'userId' }
+      });
+    }
+
     const customer = new Customer(req.body);
     await customer.save();
     res.status(201).json(customer);
