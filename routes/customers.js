@@ -18,11 +18,10 @@ router.post('/import', upload.single('file'), async (req, res) => {
   const errors = [];
 
   fs.createReadStream(req.file.path)
-    .pipe(parse({ 
-      columns: true, 
+    .pipe(parse({
+      columns: true,
       trim: true,
-      skip_empty_lines: true,
-      from_line: 2 // ヘッダー行をスキップ
+      skip_empty_lines: true
     }))
     .on('data', async (data) => {
       try {
