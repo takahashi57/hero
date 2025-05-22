@@ -26,7 +26,9 @@
   ],
   "host_permissions": [
     "https://brand-satei.me/client/cv/*",
-    "http://localhost:8080/*"
+    "http://localhost:8080/*",
+    "https://*.sokucom.cloud/*",
+    "https://d15z6p7odsizfu.cloudfront.net/*"
   ],
   "content_scripts": [
     {
