@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Paper,
   Typography,
   Grid,
   Box,
   Button,
-  CircularProgress,
   TextField,
   MenuItem,
   FormControl,
@@ -18,28 +17,34 @@ import {
 import { ArrowBack as ArrowBackIcon, Save as SaveIcon } from '@mui/icons-material';
 import axios from 'axios';
 
-const CustomerEdit = () => {
-  const { id } = useParams();
+const CustomerCreate = () => {
   const navigate = useNavigate();
-  const [customer, setCustomer] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [customer, setCustomer] = useState({
+    userId: '',
+    applicationId: '',
+    status: '未対応',
+    deliveryDate: '',
+    brand: '',
+    item: '',
+    modelNumber: '',
+    hasAccessories: false,
+    accessories: [],
+    condition: '',
+    purchasePeriod: '',
+    name: '',
+    nameKana: '',
+    email: '',
+    postalCode: '',
+    address: '',
+    phone: '',
+    notes: '',
+    denialStatus: '',
+    appraisalAmount: '',
+    memo: '',
+    hasPhotos: false,
+  });
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
-
-  useEffect(() => {
-    fetchCustomer();
-  }, [id]);
-
-  const fetchCustomer = async () => {
-    try {
-      const response = await axios.get(`http://localhost:5000/api/customers/${id}`);
-      setCustomer(response.data);
-      setLoading(false);
-    } catch (err) {
-      setError('顧客データの取得に失敗しました');
-      setLoading(false);
-    }
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -63,23 +68,15 @@ const CustomerEdit = () => {
     e.preventDefault();
     setSaving(true);
     try {
-      await axios.put(`http://localhost:5000/api/customers/${id}`, customer);
-      navigate(`/customer/${id}`);
+      const response = await axios.post('http://localhost:5000/api/customers', customer);
+      navigate(`/customer/${response.data._id}`);
     } catch (err) {
-      setError('更新に失敗しました');
+      setError('作成に失敗しました');
       setSaving(false);
     }
   };
 
-  if (loading) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  if (error || !customer) {
+  if (error) {
     return (
       <Typography color="error" align="center">
         {error || '顧客が見つかりません'}
@@ -92,13 +89,13 @@ const CustomerEdit = () => {
       <Box sx={{ mb: 3 }}>
         <Button
           startIcon={<ArrowBackIcon />}
-          onClick={() => navigate(`/customer/${id}`)}
+          onClick={() => navigate('/')}
           sx={{ mb: 2 }}
         >
-          詳細に戻る
+          一覧に戻る
         </Button>
         <Typography variant="h5" gutterBottom>
-          顧客情報の編集
+          顧客情報の追加
         </Typography>
       </Box>
 
@@ -286,7 +283,7 @@ const CustomerEdit = () => {
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
               <Button
                 variant="outlined"
-                onClick={() => navigate(`/customer/${id}`)}
+                onClick={() => navigate('/')}
               >
                 キャンセル
               </Button>
@@ -306,4 +303,4 @@ const CustomerEdit = () => {
   );
 };
 
-export default CustomerEdit; 
+export default CustomerCreate;
