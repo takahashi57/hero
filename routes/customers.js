@@ -87,7 +87,12 @@ router.post('/', async (req, res) => {
     await customer.save();
     res.status(201).json(customer);
   } catch (error) {
-    res.status(400).json({ message: '顧客の作成に失敗しました', error: error.message });
+    console.error('顧客作成エラー:', error);
+    res.status(400).json({ 
+      message: '顧客の作成に失敗しました', 
+      error: error.message,
+      details: error.errors 
+    });
   }
 });
 
@@ -98,21 +103,6 @@ router.get('/', async (req, res) => {
     res.json(customers);
   } catch (error) {
     res.status(500).json({ message: '顧客データの取得に失敗しました', error: error.message });
-  }
-});
-
-
-// 新規顧客の作成
-
-router.post('/', async (req, res) => {
-  try {
-    const customer = new Customer(req.body);
-    await customer.save();
-    res.status(201).json(customer);
-  } catch (error) {
-
-    res.status(400).json({ message: '顧客データの作成に失敗しました', error: error.message });
-
   }
 });
 

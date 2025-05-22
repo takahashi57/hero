@@ -73,13 +73,26 @@ const [saving, setSaving] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    try {
+    setError('');
 
+    // 必須フィールドのバリデーション
+    const requiredFields = ['name', 'email', 'phone'];
+    const missingFields = requiredFields.filter(field => !customer[field]);
+    
+    if (missingFields.length > 0) {
+      setError(`以下の項目は必須です: ${missingFields.join(', ')}`);
+      setSaving(false);
+      return;
+    }
+
+    try {
       const response = await axios.post('http://localhost:5000/api/customers', customer);
       navigate(`/customer/${response.data._id}`);
     } catch (err) {
-      setError('作成に失敗しました');
-
+      console.error('顧客作成エラー:', err);
+      const errorMessage = err.response?.data?.message || '作成に失敗しました';
+      const errorDetails = err.response?.data?.details || {};
+      setError(`${errorMessage}${Object.keys(errorDetails).length ? ': ' + JSON.stringify(errorDetails) : ''}`);
       setSaving(false);
     }
   };
@@ -87,10 +100,23 @@ const [saving, setSaving] = useState(false);
 
   if (error) {
     return (
-      <Typography color="error" align="center">
-{error || '顧客が見つかりません'}
-
-      </Typography>
+      <Paper sx={{ p: 3 }}>
+        <Box sx={{ mb: 3 }}>
+          <Button
+            startIcon={<ArrowBackIcon />}
+            onClick={() => navigate('/')}
+            sx={{ mb: 2 }}
+          >
+            一覧に戻る
+          </Button>
+          <Typography variant="h5" gutterBottom>
+            顧客情報の追加
+          </Typography>
+        </Box>
+        <Typography color="error" align="center" sx={{ mt: 2 }}>
+          {error}
+        </Typography>
+      </Paper>
     );
   }
 
