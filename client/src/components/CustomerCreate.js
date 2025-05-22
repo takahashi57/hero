@@ -6,6 +6,7 @@ import {
   Grid,
   Box,
   Button,
+
 // 例: 他の MUI コンポーネントと並べて
 import {
   Button,
@@ -25,7 +26,9 @@ import {
   Chip,
   OutlinedInput,
 } from '@mui/material';
+
 import { ArrowBack as ArrowBackIcon, Save as SaveIcon } from '@mui/icons-material';
+
 import axios from 'axios';
 
 const CustomerCreate = () => {
@@ -54,6 +57,7 @@ const CustomerCreate = () => {
     memo: '',
     hasPhotos: false,
   });
+
 const [error, setError] = useState('');
 const [saving, setSaving] = useState(false);
 
@@ -63,6 +67,7 @@ const [saving, setSaving] = useState(false);
     setCustomer(prev => ({
       ...prev,
       [name]: value
+
     }));
   };
 
@@ -70,7 +75,9 @@ const [saving, setSaving] = useState(false);
     const {
       target: { value },
     } = event;
+
     setCustomer(prev => ({
+
       ...prev,
       accessories: typeof value === 'string' ? value.split(',') : value,
     }));
@@ -80,13 +87,16 @@ const [saving, setSaving] = useState(false);
     e.preventDefault();
     setSaving(true);
     try {
+
       const response = await axios.post('http://localhost:5000/api/customers', customer);
       navigate(`/customer/${response.data._id}`);
     } catch (err) {
       setError('作成に失敗しました');
+
       setSaving(false);
     }
   };
+
 
   if (error) {
     return (
@@ -112,12 +122,14 @@ const [saving, setSaving] = useState(false);
         </Typography>
       </Box>
 
+
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             <Typography variant="subtitle1" color="text.secondary" gutterBottom>
               基本情報
             </Typography>
+
 <TextField
   fullWidth
   label="ユーザーID"
@@ -156,11 +168,13 @@ const [saving, setSaving] = useState(false);
                 onChange={handleChange}
                 label="ステータス"
               >
+
                 <MenuItem value="未対応">未対応</MenuItem>
                 <MenuItem value="対応済み">対応済み</MenuItem>
                 <MenuItem value="ロスト">ロスト</MenuItem>
               </Select>
             </FormControl>
+
 
             <TextField
               fullWidth
@@ -219,10 +233,12 @@ const [saving, setSaving] = useState(false);
             />
           </Grid>
 
+
           <Grid item xs={12} md={6}>
             <Typography variant="subtitle1" color="text.secondary" gutterBottom>
               商品情報
             </Typography>
+
 
             <TextField
               fullWidth
@@ -294,6 +310,7 @@ const [saving, setSaving] = useState(false);
               <Select
                 multiple
                 value={customer.accessories || []}
+
                 onChange={handleAccessoriesChange}
                 input={<OutlinedInput label="付属品" />}
                 renderValue={(selected) => (
@@ -310,6 +327,7 @@ const [saving, setSaving] = useState(false);
                 <MenuItem value="付属ケーブル">付属ケーブル</MenuItem>
               </Select>
             </FormControl>
+
           </Grid>
 
           <Grid item xs={12}>
@@ -388,6 +406,7 @@ const [saving, setSaving] = useState(false);
                 startIcon={<SaveIcon />}
                 disabled={saving}
               >
+
                 {saving ? '保存中...' : '保存'}
               </Button>
             </Box>

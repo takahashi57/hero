@@ -18,7 +18,9 @@ router.post('/import', upload.single('file'), async (req, res) => {
   const errors = [];
 
   fs.createReadStream(req.file.path)
+
     .pipe(parse({
+
       columns: true,
       trim: true,
       skip_empty_lines: true
@@ -99,14 +101,18 @@ router.get('/', async (req, res) => {
   }
 });
 
+
 // 新規顧客の作成
+
 router.post('/', async (req, res) => {
   try {
     const customer = new Customer(req.body);
     await customer.save();
     res.status(201).json(customer);
   } catch (error) {
+
     res.status(400).json({ message: '顧客データの作成に失敗しました', error: error.message });
+
   }
 });
 

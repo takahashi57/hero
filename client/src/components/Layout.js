@@ -8,7 +8,9 @@ import {
   Container,
   Box,
 } from '@mui/material';
+
 import { Upload as UploadIcon, List as ListIcon, PersonAdd as PersonAddIcon } from '@mui/icons-material';
+
 
 
 const Layout = ({ children }) => {
@@ -47,7 +49,9 @@ const Layout = ({ children }) => {
             color="inherit"
             component={RouterLink}
             to="/customer/new"
+
             startIcon={<PersonAddIcon />}
+
           >
             顧客追加
           </Button>
