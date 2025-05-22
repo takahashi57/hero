@@ -11,7 +11,7 @@ import {
 import { Upload as UploadIcon } from '@mui/icons-material';
 import axios from 'axios';
 
-const ImportCSV = () => {
+const CsvImport = () => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -114,4 +114,4 @@ const ImportCSV = () => {
   );
 };
 
-export default ImportCSV; 
+export default CsvImport;
