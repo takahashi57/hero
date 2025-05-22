@@ -9,7 +9,9 @@ import Layout from './components/Layout';
 import CustomerList from './components/CustomerList';
 import CustomerDetail from './components/CustomerDetail';
 import CustomerEdit from './components/CustomerEdit';
-import CustomerCreate from './components/CustomerCreate';
+-import CustomerCreate from './components/CustomerCreate';
++import CustomerCreate from './components/CustomerCreate';
+
 import ImportCSV from './components/ImportCSV';
 
 function App() {

@@ -6,6 +6,17 @@ import {
   Grid,
   Box,
   Button,
+// 例: 他の MUI コンポーネントと並べて
+import {
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  CircularProgress,
+} from '@mui/material';
+
   TextField,
   MenuItem,
   FormControl,
@@ -43,8 +54,9 @@ const CustomerCreate = () => {
     memo: '',
     hasPhotos: false,
   });
-  const [error, setError] = useState('');
-  const [saving, setSaving] = useState(false);
+const [error, setError] = useState('');
+const [saving, setSaving] = useState(false);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -79,7 +91,8 @@ const CustomerCreate = () => {
   if (error) {
     return (
       <Typography color="error" align="center">
-        {error || '顧客が見つかりません'}
+{error || '顧客が見つかりません'}
+
       </Typography>
     );
   }
@@ -105,6 +118,35 @@ const CustomerCreate = () => {
             <Typography variant="subtitle1" color="text.secondary" gutterBottom>
               基本情報
             </Typography>
+<TextField
+  fullWidth
+  label="ユーザーID"
+  name="userId"
+  value={customer.userId}
+  onChange={handleChange}
+  sx={{ mb: 2 }}
+/>
+
+<TextField
+  fullWidth
+  label="申し込みID"
+  name="applicationId"
+  value={customer.applicationId}
+  onChange={handleChange}
+  sx={{ mb: 2 }}
+/>
+
+<TextField
+  fullWidth
+  label="配信日時"
+  type="datetime-local"
+  name="deliveryDate"
+  value={customer.deliveryDate}
+  onChange={handleChange}
+  sx={{ mb: 2 }}
+  InputLabelProps={{ shrink: true }}
+/>
+
             
             <FormControl fullWidth sx={{ mb: 2 }}>
               <InputLabel>ステータス</InputLabel>
@@ -233,6 +275,21 @@ const CustomerCreate = () => {
             />
 
             <FormControl fullWidth sx={{ mb: 2 }}>
+<FormControl fullWidth sx={{ mb: 2 }}>
+  <InputLabel>付属品の有無</InputLabel>
+  <Select
+    name="hasAccessories"
+    value={customer.hasAccessories ? 'あり' : 'なし'}
+    onChange={(e) =>
+      setCustomer(prev => ({ ...prev, hasAccessories: e.target.value === 'あり' }))
+    }
+    label="付属品の有無"
+  >
+    <MenuItem value="あり">あり</MenuItem>
+    <MenuItem value="なし">なし</MenuItem>
+  </Select>
+</FormControl>
+
               <InputLabel>付属品</InputLabel>
               <Select
                 multiple
@@ -277,6 +334,44 @@ const CustomerCreate = () => {
               rows={4}
               sx={{ mb: 2 }}
             />
+<FormControl fullWidth sx={{ mb: 2 }}>
+  <InputLabel>否認ステータス</InputLabel>
+  <Select
+    name="denialStatus"
+    value={customer.denialStatus}
+    onChange={handleChange}
+    label="否認ステータス"
+  >
+    <MenuItem value="">なし</MenuItem>
+    <MenuItem value="否認">否認</MenuItem>
+  </Select>
+</FormControl>
+
+<TextField
+  fullWidth
+  label="査定金額"
+  name="appraisalAmount"
+  type="number"
+  value={customer.appraisalAmount}
+  onChange={handleChange}
+  sx={{ mb: 2 }}
+/>
+
+<FormControl fullWidth sx={{ mb: 2 }}>
+  <InputLabel>写真添付の有無</InputLabel>
+  <Select
+    name="hasPhotos"
+    value={customer.hasPhotos ? 'あり' : 'なし'}
+    onChange={(e) =>
+      setCustomer(prev => ({ ...prev, hasPhotos: e.target.value === 'あり' }))
+    }
+    label="写真添付の有無"
+  >
+    <MenuItem value="あり">あり</MenuItem>
+    <MenuItem value="なし">なし</MenuItem>
+  </Select>
+</FormControl>
+
           </Grid>
 
           <Grid item xs={12}>
