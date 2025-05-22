@@ -12,7 +12,7 @@ const customerSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['未対応', 'ロスト'],
+    enum: ['未対応', '対応済み', 'ロスト'],
     default: '未対応'
   },
   deliveryDate: {
@@ -35,7 +35,7 @@ const customerSchema = new mongoose.Schema({
   accessories: [String],
   condition: {
     type: String,
-    enum: ['新品', '美品', '中古品'],
+    enum: ['新品', '美品', '中古品', '中古', '未使用'],
     required: true
   },
   purchasePeriod: {
