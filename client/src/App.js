@@ -9,7 +9,7 @@ import Layout from './components/Layout';
 import CustomerList from './components/CustomerList';
 import CustomerDetail from './components/CustomerDetail';
 import CustomerEdit from './components/CustomerEdit';
-import CsvImport from './components/CsvImport';
+import ImportCSV from './components/ImportCSV';
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
             <Route path="/" element={<CustomerList />} />
             <Route path="/customer/:id" element={<CustomerDetail />} />
             <Route path="/customer/:id/edit" element={<CustomerEdit />} />
-            <Route path="/import" element={<CsvImport />} />
+            <Route path="/import" element={<ImportCSV />} />
           </Routes>
         </Layout>
       </Router>
