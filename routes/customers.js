@@ -74,6 +74,7 @@ router.post('/import', upload.single('file'), async (req, res) => {
       });
     })
     .on('error', (error) => {
+      fs.unlinkSync(req.file.path);
       res.status(500).json({ message: 'ファイルの処理中にエラーが発生しました', error: error.message });
     });
 });
@@ -85,6 +86,17 @@ router.get('/', async (req, res) => {
     res.json(customers);
   } catch (error) {
     res.status(500).json({ message: '顧客データの取得に失敗しました', error: error.message });
+  }
+});
+
+// 新規顧客の作成
+router.post('/', async (req, res) => {
+  try {
+    const customer = new Customer(req.body);
+    await customer.save();
+    res.status(201).json(customer);
+  } catch (error) {
+    res.status(400).json({ message: '顧客データの作成に失敗しました', error: error.message });
   }
 });
 
@@ -115,6 +127,19 @@ router.put('/:id', async (req, res) => {
     res.json(customer);
   } catch (error) {
     res.status(500).json({ message: '顧客データの更新に失敗しました', error: error.message });
+  }
+});
+
+// 顧客の削除
+router.delete('/:id', async (req, res) => {
+  try {
+    const customer = await Customer.findByIdAndDelete(req.params.id);
+    if (!customer) {
+      return res.status(404).json({ message: '顧客が見つかりません' });
+    }
+    res.json({ message: '顧客を削除しました' });
+  } catch (error) {
+    res.status(500).json({ message: '顧客データの削除に失敗しました', error: error.message });
   }
 });
 
