@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Paper,
   Typography,
   Grid,
   Box,
   Button,
-  CircularProgress,
   TextField,
   MenuItem,
   FormControl,
@@ -18,34 +17,40 @@ import {
 import { ArrowBack as ArrowBackIcon, Save as SaveIcon } from '@mui/icons-material';
 import axios from 'axios';
 
-const CustomerEdit = () => {
-  const { id } = useParams();
+const CustomerCreate = () => {
   const navigate = useNavigate();
-  const [customer, setCustomer] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [customer, setCustomer] = useState({
+    userId: '',
+    applicationId: '',
+    status: '未対応',
+    deliveryDate: '',
+    brand: '',
+    item: '',
+    modelNumber: '',
+    hasAccessories: false,
+    accessories: [],
+    condition: '',
+    purchasePeriod: '',
+    name: '',
+    nameKana: '',
+    email: '',
+    postalCode: '',
+    address: '',
+    phone: '',
+    notes: '',
+    denialStatus: '',
+    appraisalAmount: '',
+    memo: '',
+    hasPhotos: false,
+  });
   const [saving, setSaving] = useState(false);
-
-  useEffect(() => {
-    fetchCustomer();
-  }, [id]);
-
-  const fetchCustomer = async () => {
-    try {
-      const response = await axios.get(`http://localhost:5000/api/customers/${id}`);
-      setCustomer(response.data);
-      setLoading(false);
-    } catch (err) {
-      setError('顧客データの取得に失敗しました');
-      setLoading(false);
-    }
-  };
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCustomer(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -63,42 +68,22 @@ const CustomerEdit = () => {
     e.preventDefault();
     setSaving(true);
     try {
-      await axios.put(`http://localhost:5000/api/customers/${id}`, customer);
-      navigate(`/customer/${id}`);
+      await axios.post('http://localhost:5000/api/customers', customer);
+      navigate('/');
     } catch (err) {
-      setError('更新に失敗しました');
+      setError('登録に失敗しました');
       setSaving(false);
     }
   };
 
-  if (loading) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  if (error || !customer) {
-    return (
-      <Typography color="error" align="center">
-        {error || '顧客が見つかりません'}
-      </Typography>
-    );
-  }
-
   return (
     <Paper sx={{ p: 3 }}>
       <Box sx={{ mb: 3 }}>
-        <Button
-          startIcon={<ArrowBackIcon />}
-          onClick={() => navigate(`/customer/${id}`)}
-          sx={{ mb: 2 }}
-        >
-          詳細に戻る
+        <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/')} sx={{ mb: 2 }}>
+          一覧に戻る
         </Button>
         <Typography variant="h5" gutterBottom>
-          顧客情報の編集
+          新規顧客の登録
         </Typography>
       </Box>
 
@@ -108,7 +93,25 @@ const CustomerEdit = () => {
             <Typography variant="subtitle1" color="text.secondary" gutterBottom>
               基本情報
             </Typography>
-            
+
+            <TextField
+              fullWidth
+              label="ユーザーID"
+              name="userId"
+              value={customer.userId}
+              onChange={handleChange}
+              sx={{ mb: 2 }}
+            />
+
+            <TextField
+              fullWidth
+              label="申し込みID"
+              name="applicationId"
+              value={customer.applicationId}
+              onChange={handleChange}
+              sx={{ mb: 2 }}
+            />
+
             <FormControl fullWidth sx={{ mb: 2 }}>
               <InputLabel>ステータス</InputLabel>
               <Select
@@ -125,6 +128,17 @@ const CustomerEdit = () => {
 
             <TextField
               fullWidth
+              type="datetime-local"
+              label="配信日時"
+              name="deliveryDate"
+              InputLabelProps={{ shrink: true }}
+              value={customer.deliveryDate}
+              onChange={handleChange}
+              sx={{ mb: 2 }}
+            />
+
+            <TextField
+              fullWidth
               label="顧客名"
               name="name"
               value={customer.name}
@@ -134,7 +148,7 @@ const CustomerEdit = () => {
 
             <TextField
               fullWidth
-              label="顧客名（カナ）"
+              label="ふりがな"
               name="nameKana"
               value={customer.nameKana}
               onChange={handleChange}
@@ -221,6 +235,8 @@ const CustomerEdit = () => {
                 label="商品の状態"
               >
                 <MenuItem value="新品">新品</MenuItem>
+                <MenuItem value="美品">美品</MenuItem>
+                <MenuItem value="中古品">中古品</MenuItem>
                 <MenuItem value="中古">中古</MenuItem>
                 <MenuItem value="未使用">未使用</MenuItem>
               </Select>
@@ -239,7 +255,7 @@ const CustomerEdit = () => {
               <InputLabel>付属品</InputLabel>
               <Select
                 multiple
-                value={customer.accessories || []}
+                value={customer.accessories}
                 onChange={handleAccessoriesChange}
                 input={<OutlinedInput label="付属品" />}
                 renderValue={(selected) => (
@@ -261,12 +277,31 @@ const CustomerEdit = () => {
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="備考・要望"
+              label="備考・要望など"
               name="notes"
               value={customer.notes}
               onChange={handleChange}
               multiline
               rows={4}
+              sx={{ mb: 2 }}
+            />
+
+            <TextField
+              fullWidth
+              label="否認ステータス"
+              name="denialStatus"
+              value={customer.denialStatus}
+              onChange={handleChange}
+              sx={{ mb: 2 }}
+            />
+
+            <TextField
+              fullWidth
+              label="査定金額"
+              name="appraisalAmount"
+              type="number"
+              value={customer.appraisalAmount}
+              onChange={handleChange}
               sx={{ mb: 2 }}
             />
 
@@ -283,19 +318,14 @@ const CustomerEdit = () => {
           </Grid>
 
           <Grid item xs={12}>
+            {error && (
+              <Typography color="error" sx={{ mb: 2 }}>
+                {error}
+              </Typography>
+            )}
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-              <Button
-                variant="outlined"
-                onClick={() => navigate(`/customer/${id}`)}
-              >
-                キャンセル
-              </Button>
-              <Button
-                type="submit"
-                variant="contained"
-                startIcon={<SaveIcon />}
-                disabled={saving}
-              >
+              <Button variant="outlined" onClick={() => navigate('/')}>キャンセル</Button>
+              <Button type="submit" variant="contained" startIcon={<SaveIcon />} disabled={saving}>
                 {saving ? '保存中...' : '保存'}
               </Button>
             </Box>
@@ -306,4 +336,4 @@ const CustomerEdit = () => {
   );
 };
 
-export default CustomerEdit; 
+export default CustomerCreate;

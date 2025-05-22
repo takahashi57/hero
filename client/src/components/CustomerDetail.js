@@ -112,7 +112,13 @@ const CustomerDetail = () => {
             </Typography>
             <Chip
               label={customer.status}
-              color={customer.status === '未対応' ? 'warning' : 'error'}
+              color={
+                customer.status === '未対応'
+                  ? 'warning'
+                  : customer.status === '対応済み'
+                  ? 'success'
+                  : 'error'
+              }
               size="small"
               sx={{ mt: 1 }}
             />
