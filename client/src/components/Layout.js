@@ -8,10 +8,8 @@ import {
   Container,
   Box,
 } from '@mui/material';
- cyls60-codex/cmsプログラムのバグ修正提案
-
 import { Upload as UploadIcon, List as ListIcon, PersonAdd as PersonAddIcon } from '@mui/icons-material';
-main
+
 
 const Layout = ({ children }) => {
   return (
