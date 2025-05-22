@@ -24,13 +24,13 @@ const CustomerCreate = () => {
     userId: '',
     applicationId: '',
     status: '未対応',
-    deliveryDate: '',
+    deliveryDate: new Date().toISOString().slice(0, 16),
     brand: '',
     item: '',
     modelNumber: '',
     hasAccessories: false,
     accessories: [],
-    condition: '',
+    condition: '新品',
     purchasePeriod: '',
     name: '',
     nameKana: '',
@@ -76,7 +76,21 @@ const [saving, setSaving] = useState(false);
     setError('');
 
     // 必須フィールドのバリデーション
-    const requiredFields = ['name', 'email', 'phone'];
+    const requiredFields = [
+      'userId',
+      'applicationId',
+      'deliveryDate',
+      'brand',
+      'item',
+      'condition',
+      'purchasePeriod',
+      'name',
+      'nameKana',
+      'email',
+      'postalCode',
+      'address',
+      'phone'
+    ];
     const missingFields = requiredFields.filter(field => !customer[field]);
     
     if (missingFields.length > 0) {
@@ -150,6 +164,7 @@ const [saving, setSaving] = useState(false);
   value={customer.userId}
   onChange={handleChange}
   sx={{ mb: 2 }}
+  required
 />
 
 <TextField
@@ -159,6 +174,7 @@ const [saving, setSaving] = useState(false);
   value={customer.applicationId}
   onChange={handleChange}
   sx={{ mb: 2 }}
+  required
 />
 
 <TextField
@@ -170,6 +186,7 @@ const [saving, setSaving] = useState(false);
   onChange={handleChange}
   sx={{ mb: 2 }}
   InputLabelProps={{ shrink: true }}
+  required
 />
 
             
@@ -196,6 +213,7 @@ const [saving, setSaving] = useState(false);
               value={customer.name}
               onChange={handleChange}
               sx={{ mb: 2 }}
+              required
             />
 
             <TextField
@@ -205,6 +223,7 @@ const [saving, setSaving] = useState(false);
               value={customer.nameKana}
               onChange={handleChange}
               sx={{ mb: 2 }}
+              required
             />
 
             <TextField
@@ -214,6 +233,7 @@ const [saving, setSaving] = useState(false);
               value={customer.email}
               onChange={handleChange}
               sx={{ mb: 2 }}
+              required
             />
 
             <TextField
@@ -223,6 +243,7 @@ const [saving, setSaving] = useState(false);
               value={customer.phone}
               onChange={handleChange}
               sx={{ mb: 2 }}
+              required
             />
 
             <TextField
@@ -232,6 +253,7 @@ const [saving, setSaving] = useState(false);
               value={customer.postalCode}
               onChange={handleChange}
               sx={{ mb: 2 }}
+              required
             />
 
             <TextField
@@ -243,6 +265,7 @@ const [saving, setSaving] = useState(false);
               multiline
               rows={2}
               sx={{ mb: 2 }}
+              required
             />
           </Grid>
 
@@ -260,6 +283,7 @@ const [saving, setSaving] = useState(false);
               value={customer.brand}
               onChange={handleChange}
               sx={{ mb: 2 }}
+              required
             />
 
             <TextField
@@ -269,6 +293,7 @@ const [saving, setSaving] = useState(false);
               value={customer.item}
               onChange={handleChange}
               sx={{ mb: 2 }}
+              required
             />
 
             <TextField
@@ -287,8 +312,11 @@ const [saving, setSaving] = useState(false);
                 value={customer.condition}
                 onChange={handleChange}
                 label="商品の状態"
+                required
               >
                 <MenuItem value="新品">新品</MenuItem>
+                <MenuItem value="美品">美品</MenuItem>
+                <MenuItem value="中古品">中古品</MenuItem>
                 <MenuItem value="中古">中古</MenuItem>
                 <MenuItem value="未使用">未使用</MenuItem>
               </Select>
@@ -301,6 +329,7 @@ const [saving, setSaving] = useState(false);
               value={customer.purchasePeriod}
               onChange={handleChange}
               sx={{ mb: 2 }}
+              required
             />
 
             <FormControl fullWidth sx={{ mb: 2 }}>
