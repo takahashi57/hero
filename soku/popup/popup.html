@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SokuCom Extension</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <h1>SokuCom Extension</h1>
+    
+    <!-- タブメニュー -->
+    <div class="tab-menu">
+      <button class="tab-button active" data-tab="mainTab">メイン</button>
+      <button class="tab-button" data-tab="cmsSettingsTab">CMS設定</button>
+    </div>
+    
+    <!-- メインタブ -->
+    <div id="mainTab" class="tab-content active">
+      <div class="content">
+        <p class="description">このChrome拡張機能は、SokuComサイトでの電話アクションをサポートします。</p>
+        <div class="status-area" id="statusArea">
+          <span id="statusIcon">●</span>
+          <p id="statusMessage">ステータスを確認中...</p>
+        </div>
+        <div class="action-buttons">
+          <button id="actionButton" class="primary-button">電話アクション実行</button>
+        </div>
+        <div class="settings-area">
+          <div class="toggle-container">
+            <span>発信まで自動実行：</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="autoCallToggle">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          
+          <!-- お問い合わせCMS自動更新設定 -->
+          <div class="settings-section" id="cvSettings">
+            <h3>お問い合わせCMS設定</h3>
+            <div class="toggle-container">
+              <span>自動更新：</span>
+              <label class="toggle-switch">
+                <input type="checkbox" id="autoRefreshToggle">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="input-container">
+              <label for="refreshInterval">更新間隔（秒）：</label>
+              <input type="number" id="refreshInterval" min="1" max="300" value="5">
+            </div>
+          </div>
+        </div>
+        <div class="result-area">
+          <p id="messageBox">準備完了。ボタンをクリックして電話アクションを実行できます。</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- CMS設定タブ -->
+    <div id="cmsSettingsTab" class="tab-content">
+      <div class="content">
+        <h2>お問い合わせCMS設定</h2>
+        <p class="description">お問い合わせ管理システムのアクセス先と要素セレクタを設定します。</p>
+        
+        <!-- ターゲット一覧 -->
+        <div id="cmsTargetList" class="cms-target-list">
+          <!-- JSで動的に追加 -->
+        </div>
+        
+        <!-- 追加ボタン -->
+        <div class="action-buttons">
+          <button id="addTargetBtn" class="secondary-button">新規ターゲット追加</button>
+        </div>
+        
+        <!-- 編集フォーム（初期状態は非表示） -->
+        <form id="editTargetForm" class="edit-form" style="display: none;">
+          <h3 id="editFormTitle">ターゲットを編集</h3>
+          <div class="form-group">
+            <label for="targetDomain">ドメイン：</label>
+            <input type="text" id="targetDomain" placeholder="例: brand-satei.me">
+          </div>
+          <div class="form-group">
+            <label for="targetPath">パス：</label>
+            <input type="text" id="targetPath" placeholder="例: /client/cv/">
+          </div>
+          <div class="form-group">
+            <label for="targetSelector">テーブルセレクタ：</label>
+            <input type="text" id="targetSelector" placeholder="例: form#form_list > table">
+          </div>
+          <div class="form-buttons">
+            <button type="button" id="saveTargetBtn" class="primary-button">保存</button>
+            <button type="button" id="cancelTargetBtn" class="secondary-button">キャンセル</button>
+          </div>
+        </form>
+        
+        <div class="help-text">
+          <p>※ お問い合わせCMSのHTMLセレクタがわからない場合は、デフォルト値を使用してください。</p>
+          <p>※ 本番環境: <code>form#form_list > table</code></p>
+          <p>※ 開発環境: <code>div.inquiry-list > table</code></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

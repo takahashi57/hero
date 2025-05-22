@@ -1,0 +1,50 @@
+{
+  "manifest_version": 3,
+  "name": "SokuCom Extension",
+  "version": "0.1.0",
+  "description": "Chrome拡張機能プロジェクト",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "permissions": [
+    "notifications",
+    "storage",
+    "activeTab",
+    "contextMenus",
+    "tabs",
+    "alarms",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://brand-satei.me/client/cv/*",
+    "http://localhost:8080/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://d15z6p7odsizfu.cloudfront.net/*",
+        "https://*.sokucom.cloud/*",
+        "<all_urls>"
+      ],
+      "js": ["content-scripts/general/index.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://brand-satei.me/client/cv/*",
+        "http://localhost:8080/*"
+      ],
+      "js": ["content-scripts/cms/index.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
