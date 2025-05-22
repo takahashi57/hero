@@ -9,8 +9,11 @@ import Layout from './components/Layout';
 import CustomerList from './components/CustomerList';
 import CustomerDetail from './components/CustomerDetail';
 import CustomerEdit from './components/CustomerEdit';
-import ImportCSV from './components/ImportCSV';
+
+
 import CustomerCreate from './components/CustomerCreate';
+
+
 
 function App() {
   return (
@@ -20,6 +23,7 @@ function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<CustomerList />} />
+            <Route path="/customer/new" element={<CustomerCreate />} />
             <Route path="/customer/:id" element={<CustomerDetail />} />
             <Route path="/customer/new" element={<CustomerCreate />} />
             <Route path="/customer/:id/edit" element={<CustomerEdit />} />

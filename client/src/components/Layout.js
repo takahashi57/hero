@@ -8,7 +8,10 @@ import {
   Container,
   Box,
 } from '@mui/material';
-import { Upload as UploadIcon, List as ListIcon, Add as AddIcon } from '@mui/icons-material';
+
+import { Upload as UploadIcon, List as ListIcon, PersonAdd as PersonAddIcon } from '@mui/icons-material';
+
+
 
 const Layout = ({ children }) => {
   return (
@@ -29,6 +32,14 @@ const Layout = ({ children }) => {
           <Button
             color="inherit"
             component={RouterLink}
+            to="/customer/new"
+            startIcon={<AddIcon />}
+          >
+            顧客追加
+          </Button>
+          <Button
+            color="inherit"
+            component={RouterLink}
             to="/import"
             startIcon={<UploadIcon />}
           >
@@ -38,7 +49,9 @@ const Layout = ({ children }) => {
             color="inherit"
             component={RouterLink}
             to="/customer/new"
-            startIcon={<AddIcon />}
+
+            startIcon={<PersonAddIcon />}
+
           >
             顧客追加
           </Button>
