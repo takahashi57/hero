@@ -6,29 +6,16 @@ import {
   Grid,
   Box,
   Button,
-
-// 例: 他の MUI コンポーネントと並べて
-import {
-  Button,
   TextField,
   Select,
   MenuItem,
   FormControl,
   InputLabel,
   CircularProgress,
-} from '@mui/material';
-
-  TextField,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Select,
   Chip,
   OutlinedInput,
 } from '@mui/material';
-
 import { ArrowBack as ArrowBackIcon, Save as SaveIcon } from '@mui/icons-material';
-
 import axios from 'axios';
 
 const CustomerCreate = () => {
