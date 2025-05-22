@@ -67,6 +67,8 @@ const CustomerList = () => {
     switch (status) {
       case '未対応':
         return 'warning';
+      case '対応済み':
+        return 'success';
       case 'ロスト':
         return 'error';
       default:
